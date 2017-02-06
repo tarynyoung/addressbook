@@ -25,12 +25,14 @@ public class ContactForm extends FormLayout {
 
     Button save = new Button("Save", this::save);
     Button cancel = new Button("Cancel", this::cancel);
+    
     TextField firstName = new TextField("First name");
     TextField lastName = new TextField("Last name");
-    TextField phone = new TextField("Phone");
-    TextField email = new TextField("Email");
-    DateField birthDate = new DateField("Birth date");
-
+    TextField task = new TextField("Task");
+    DateField startDate = new DateField("Start date");
+    DateField endDate = new DateField("End date");
+    Button rem = new Button("Remove", this::rem);
+    
     Contact contact;
 
     // Easily bind forms to beans and manage validation and buffering
@@ -57,10 +59,10 @@ public class ContactForm extends FormLayout {
         setSizeUndefined();
         setMargin(true);
 
-        HorizontalLayout actions = new HorizontalLayout(save, cancel);
+        HorizontalLayout actions = new HorizontalLayout(save, cancel, rem);
         actions.setSpacing(true);
 
-        addComponents(actions, firstName, lastName, phone, email, birthDate);
+        addComponents(actions, firstName, lastName, task, startDate, endDate);
     }
 
     /*
@@ -97,6 +99,11 @@ public class ContactForm extends FormLayout {
         getUI().contactList.select(null);
     }
 
+    public void rem(Button.ClickEvent event){
+    	getUI().service.delete(contact);
+    	getUI().refreshContacts();
+    }
+    
     void edit(Contact contact) {
         this.contact = contact;
         if (contact != null) {
